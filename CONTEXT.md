@@ -53,6 +53,11 @@ A prioridade do item dentro do nível: `core` (essencial), `support` (apoio), `c
 `advanced`. Define a cadência, não a dificuldade.
 _Evite_: peso, nível (que já é outra coisa).
 
+**Token de marca**
+Uma variável de cor ou tipografia declarada em `assets/govhub.css` (`--gh-purple`, `--ink`…). É onde a
+identidade visual do GovHub vive; nenhuma página declara cor própria.
+_Evite_: variável CSS, cor do tema.
+
 **Gancho de contexto**
 A abertura de uma página que conecta o conceito a um painel real que a pessoa vai precisar construir.
 Vem antes do objetivo ou dos passos.

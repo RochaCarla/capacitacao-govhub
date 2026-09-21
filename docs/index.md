@@ -18,3 +18,4 @@ A ordem recomendada de leitura está na [trilha](trilhas/index.md) — ou na
 ## Decisões registradas
 
 - [ADR 0001 — mapeamento Diátaxis do levantamento de conteúdos](adr/0001-mapeamento-diataxis-do-levantamento.md)
+- [ADR 0002 — identidade visual do GovHub](adr/0002-identidade-visual-govhub.md)

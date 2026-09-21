@@ -88,7 +88,17 @@ Caminhos repetidos são permitidos: vários nós podem apontar para o mesmo docu
 
 Tudo o mais em `roadmap.html` e `index.html` (design, CSS, JS) é seu.
 
-## 3. Pré-visualizar
+## 3. Identidade visual
+
+O material segue a identidade do GovHub. Cores e tipografia estão em `assets/govhub.css` — é o único
+lugar onde se mexe nelas, e vale para `index.html`, `roadmap.html` e `doc.html`.
+
+- **Cor nova exige checar contraste**: 4,5:1 para texto, 3:1 para indicadores não textuais.
+- **Nunca use cor sozinha** para diferenciar coisas — o tipo de página, por exemplo, aparece também
+  pelo rótulo e pelo estilo da borda.
+- O porquê de cada decisão está na [ADR 0002](docs/adr/0002-identidade-visual-govhub.md).
+
+## 4. Pré-visualizar
 
 ```bash
 python3 -m http.server 8000
@@ -96,13 +106,13 @@ python3 -m http.server 8000
 
 E abra <http://localhost:8000/>.
 
-## 4. Decisões estruturais
+## 5. Decisões estruturais
 
 Mudanças na forma como o material é organizado — não no conteúdo de uma página — vão para
 `docs/adr/`, seguindo o formato de [ADR 0001](docs/adr/0001-mapeamento-diataxis-do-levantamento.md):
 contexto, decisão, consequências, alternativas consideradas.
 
-## 5. Commits
+## 6. Commits
 
 Prefixo por tipo de mudança:
 

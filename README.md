@@ -86,6 +86,7 @@ Dashboards-Roadmap/
 ├── roadmap.html                 gen · trilha visual com progresso
 ├── doc.html                     visualizador de Markdown
 ├── roadmap-dashboards.xmind     gen · mapa mental
+├── assets/                      identidade visual: tokens, logotipo e favicon
 ├── tools/gen_roadmap.py         ROADMAP.md -> html + xmind + trilhas
 ├── docs/
 │   ├── tutoriais/  guias/  referencia/  explicacao/  desafios/  pesquisa/
@@ -97,6 +98,9 @@ Dashboards-Roadmap/
 ```
 
 `gen` marca arquivos **regenerados** por `tools/gen_roadmap.py` — não edite à mão.
+
+As cores e a tipografia das três páginas vêm de `assets/govhub.css`, que segue a identidade visual
+do GovHub ([ADR 0002](docs/adr/0002-identidade-visual-govhub.md)).
 
 ---
 
@@ -183,7 +187,17 @@ Isso regenera `roadmap.html`, `roadmap-dashboards.xmind` e `docs/trilhas/index.m
 esqueleto** para todo `.md` referenciado que ainda não exista, e **nunca renomeia** caminhos (vários
 nós podem apontar para o mesmo documento de propósito).
 
-### 7.3 Arquivos gerados — não edite à mão
+### 7.3 Mudar cores, tipografia ou logotipo
+
+Tudo o que é marca vive em `assets/govhub.css`: os tokens de cor (`--gh-purple`, `--gh-orange`…), a
+assinatura da navegação e o realce de foco. Mudou um token ali, mudou nas três páginas. O logotipo e o
+favicon são os arquivos oficiais da plataforma, em `assets/`.
+
+Ao escolher uma cor nova, verifique o contraste: texto precisa de **4,5:1** e indicadores não textuais
+de **3:1** (WCAG 2.1 AA). O laranja da marca, por exemplo, só é usado como decoração — ele reprova
+como texto sobre branco. O raciocínio completo está na [ADR 0002](docs/adr/0002-identidade-visual-govhub.md).
+
+### 7.4 Arquivos gerados — não edite à mão
 
 - `roadmap.html` — **apenas** a região entre `<!-- ROADMAP:START -->` e `<!-- ROADMAP:END -->`. Todo o
   resto (design, CSS, JS) você pode editar livremente.
@@ -191,7 +205,7 @@ nós podem apontar para o mesmo documento de propósito).
 - `roadmap-dashboards.xmind`
 - `docs/trilhas/index.md`
 
-### 7.4 Publicar
+### 7.5 Publicar
 
 Não há deploy automatizado. O repositório é um site estático:
 

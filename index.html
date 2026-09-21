@@ -4,39 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trilha de Capacitação em Dashboards — GovHub</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/govhub.css">
 <style>
-  :root{
-    --blue:#1351B4; --blue-d:#0C326F; --blue-dd:#071D41;
-    --green:#168821; --green-d:#0D5F17;
-    --amber:#FFCD07; --amber-d:#A15C00;
-    --red:#C7200C; --red-d:#9E1A06;
-    --purple:#7C4DA0; --teal:#0F7B8F;
-    --ink:#1f2433; --muted:#6b7280; --line:#e2e6ef; --panel:#fff; --accent:#0C326F;
-    --tut:#168821; --tut-bg:#e9f5ea; --gui:#1351B4; --gui-bg:#e8effb;
-    --ref:#7C4DA0; --ref-bg:#f2ecf8; --exp:#A15C00; --exp-bg:#f9f1e6;
-    --des:#C7200C; --des-bg:#fdece9; --res:#0F7B8F; --res-bg:#e7f3f6;
-  }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-       color:var(--ink);background:#f4f6fb;line-height:1.6}
-  a{color:var(--blue);text-decoration:none}
+  body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.6}
+  a{color:var(--gh-purple);text-decoration:none}
   a:hover{text-decoration:underline}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#e7ecf7;padding:.1em .4em;border-radius:4px;font-size:.88em}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f0eafe;padding:.1em .4em;border-radius:4px;font-size:.88em}
   .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
-  nav{position:sticky;top:0;z-index:20;background:var(--blue-dd);border-bottom:1px solid var(--blue)}
+  nav{position:sticky;top:0;z-index:20;background:var(--gh-purple);border-bottom:1px solid var(--gh-purple-d)}
   nav .wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:11px 20px}
-  nav strong{color:#fff;font-size:.95rem;margin-right:auto;letter-spacing:.02em}
-  nav a{color:#c3d2ea;font-size:.86rem}
+  nav a{color:var(--gh-on-dark);font-size:.86rem}
   nav a:hover,nav a.active{color:#fff;text-decoration:none}
-  nav a.active{border-bottom:2px solid var(--amber)}
+  nav a.active{border-bottom:2px solid var(--gh-orange-l)}
 
-  header.hero{background:linear-gradient(135deg,var(--blue-dd),var(--blue));color:#fff;padding:56px 0 46px}
+  header.hero{background:linear-gradient(135deg,var(--gh-purple-d),var(--gh-purple));color:#fff;padding:56px 0 46px}
   header.hero h1{margin:0 0 12px;font-size:2.1rem;line-height:1.2}
-  header.hero p.sub{font-size:1.1rem;color:#d3ddf0;max-width:800px;margin:0 0 22px}
+  header.hero p.sub{font-size:1.1rem;color:var(--gh-on-dark);max-width:800px;margin:0 0 22px}
   .badges{display:flex;flex-wrap:wrap;gap:8px}
-  .badges a{background:rgba(255,255,255,.12);color:#eef2f8;border:1px solid rgba(255,255,255,.22);
+  .badges a{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);
             padding:5px 11px;border-radius:999px;font-size:.8rem}
   .badges a:hover{background:rgba(255,255,255,.22);text-decoration:none}
 
@@ -59,7 +52,7 @@
   .quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:600px){.quad-grid{grid-template-columns:1fr}}
   .quad{border-radius:12px;padding:18px;border:1px solid var(--line);display:block;color:var(--ink)}
-  .quad:hover{text-decoration:none;transform:translateY(-2px);transition:.15s;box-shadow:0 6px 18px rgba(31,36,51,.07)}
+  .quad:hover{text-decoration:none;transform:translateY(-2px);transition:.15s;box-shadow:0 6px 18px rgba(60,20,120,.13)}
   .quad .tag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
   .quad h4{margin:6px 0 4px;font-size:1.05rem}
   .quad p{margin:0;font-size:.86rem;color:var(--muted)}
@@ -77,10 +70,10 @@
   @media(max-width:680px){.map ul{columns:1}}
   .map li{margin:3px 0;font-size:.92rem;break-inside:avoid}
 
-  pre.tree{background:var(--blue-dd);color:#dbe5f5;border-radius:12px;padding:20px;overflow:auto;
+  pre.tree{background:var(--gh-purple-dd);color:#e6dcfa;border-radius:12px;padding:20px;overflow:auto;
       font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;line-height:1.5}
-  pre.tree .c{color:#8aa6cc}
-  pre.tree a{color:#8fd0e2}
+  pre.tree .c{color:#b39ded}
+  pre.tree a{color:#f7c98b}
 
   .phases{display:grid;gap:14px}
   .phase{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;border-left:5px solid var(--accent)}
@@ -88,19 +81,19 @@
   .phase ul{margin:6px 0 0;padding-left:20px;font-size:.9rem;color:#374151}
 
   .btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 20px;border-radius:10px;font-weight:600;font-size:.9rem}
-  .btn:hover{text-decoration:none;background:#071D41}
+  .btn:hover{text-decoration:none;background:var(--gh-purple-d)}
   .btn.alt{background:var(--green)} .btn.alt:hover{background:var(--green-d)}
-  .note{background:var(--gui-bg);border:1px solid #bdd0ee;border-radius:10px;padding:12px 16px;font-size:.9rem}
+  .note{background:var(--gh-tint);border:1px solid var(--gh-tint-line);border-radius:10px;padding:12px 16px;font-size:.9rem}
   table.diataxis{border-collapse:collapse;width:100%;font-size:.9rem;background:#fff;border-radius:10px;overflow:hidden}
   table.diataxis th,table.diataxis td{border:1px solid var(--line);padding:8px 12px;text-align:left}
-  table.diataxis th{background:#eaf0fa;color:var(--accent)}
+  table.diataxis th{background:var(--gh-tint);color:var(--accent)}
   footer{padding:30px 0;color:var(--muted);font-size:.85rem;text-align:center}
 </style>
 </head>
 <body>
 
 <nav><div class="wrap">
-  <strong>Dashboards GovHub</strong>
+  <a class="brand" href="index.html"><img src="assets/govhub-logo.svg" alt="GovHub"><span>Trilha de Dashboards</span></a>
   <a href="index.html" class="active">Início</a>
   <a href="roadmap.html">Trilha</a>
   <a href="#diataxis">Diátaxis</a>
