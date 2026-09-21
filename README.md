@@ -1,0 +1,209 @@
+# Trilha de Capacitação em Dashboards — GovHub
+
+> Um material prático para quem constrói dashboards no **GovHub**, com **Apache Superset** e
+> **Power BI**. Da pergunta de negócio ao painel publicado — com acessibilidade tratada como
+> requisito, não como acabamento.
+
+Este documento é o **ponto de entrada**: explica o que estamos construindo, como o conteúdo está
+organizado (framework **Diátaxis**) e como editar e evoluir o material.
+
+- Estrutura do conteúdo: [Diátaxis](https://diataxis.fr/)
+- Acessibilidade: [eMAG](https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/acessibilidade-digital) e [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/)
+- Trilha de aprendizagem: [roadmap.html](roadmap.html) · fonte única em [ROADMAP.md](ROADMAP.md)
+
+> Vai editar o material? Pule para a seção 7 — [Como editar e contribuir](#7-como-editar-e-contribuir).
+
+---
+
+## 1. Visão geral
+
+Muita gente passa boa parte do dia procurando informação dentro de planilhas: filtra colunas, ordena
+dados, monta tabelas temporárias e repete o processo toda vez que precisa responder uma pergunta
+simples. O problema não está nos dados — está na forma como eles são apresentados.
+
+Esta trilha ensina a transformar dados em decisão: primeiro o vocabulário e o raciocínio crítico,
+depois a execução técnica na ferramenta.
+
+### A lógica da trilha
+
+A trilha segue a progressão **"por quê" → "o quê" → "como"**:
+
+1. **Fundamentos conceituais** — por que um dashboard é bom ou ruim
+2. **Princípios transversais** — design, acessibilidade, arquitetura da informação (valem para
+   qualquer ferramenta)
+3. **Execução técnica** — como aplicar isso no Superset e no Power BI
+4. **Padrões e governança GovHub** — como isso se conecta ao ecossistema da plataforma
+5. **Prática guiada** — estudo de caso, checklist, publicação
+
+**Acessibilidade e arquitetura da informação não são um módulo isolado no fim.** Elas aparecem desde o
+Nível 0 como critérios de qualidade e voltam de forma aplicada nos níveis técnicos.
+
+### Público
+
+Quem constrói ou encomenda painéis no GovHub: analistas, gestão e equipes técnicas. Não se assume
+formação em design nem em estatística.
+
+### Pré-requisitos
+
+- Noções básicas de dados (o que é uma tabela, uma métrica, um filtro).
+- Acesso ao ambiente do GovHub para a parte prática.
+
+---
+
+## 2. Princípios de organização (Diátaxis)
+
+Cada página tem **um único propósito**. A regra de ouro do Diátaxis: não misturar aprender, fazer,
+consultar e entender na mesma página.
+
+| Quadrante | Pasta | Propósito |
+|---|---|---|
+| **Tutorial** | `docs/tutoriais/` | aprender fazendo, guiado do início ao fim |
+| **Guia (how-to)** | `docs/guias/` | resolver uma tarefa concreta |
+| **Referência** | `docs/referencia/` | consultar fatos durante o trabalho |
+| **Explicação** | `docs/explicacao/` | entender o porquê, o contexto e os trade-offs |
+
+Além dos quatro quadrantes, duas seções complementares:
+
+| Seção | Pasta | Propósito |
+|---|---|---|
+| **Desafio** | `docs/desafios/` | entrega integradora com critérios de aceitação |
+| **Pesquisa** | `docs/pesquisa/` | análise comparativa (pergunta → metodologia → resultados) |
+
+O mapeamento do levantamento de conteúdos original para esses tipos está registrado em
+[ADR 0001](docs/adr/0001-mapeamento-diataxis-do-levantamento.md).
+
+---
+
+## 3. Estrutura de pastas
+
+```
+Dashboards-Roadmap/
+├── README.md                    visão geral + estrutura + como editar
+├── ROADMAP.md                   fonte única da trilha
+├── CONTEXT.md                   linguagem ubíqua da autoria
+├── CONTRIBUTING.md              como contribuir
+├── index.html                   landing page
+├── roadmap.html                 gen · trilha visual com progresso
+├── doc.html                     visualizador de Markdown
+├── roadmap-dashboards.xmind     gen · mapa mental
+├── tools/gen_roadmap.py         ROADMAP.md -> html + xmind + trilhas
+├── docs/
+│   ├── tutoriais/  guias/  referencia/  explicacao/  desafios/  pesquisa/
+│   ├── adr/                     decisões de arquitetura do material
+│   ├── trilhas/index.md         gen · trilha em texto
+│   └── index.md                 índice da documentação
+├── exemplos/                    dados, temas e wireframes de apoio
+└── templates/                   um template por tipo de página
+```
+
+`gen` marca arquivos **regenerados** por `tools/gen_roadmap.py` — não edite à mão.
+
+---
+
+## 4. A trilha
+
+A trilha tem sete níveis, do vocabulário à publicação:
+
+| Nível | Tema |
+|---|---|
+| 0 | Fundamentos de visualização de dados |
+| 1 | Arquitetura da informação |
+| 2 | Hierarquia visual e storytelling |
+| 3 | Design visual e acessibilidade |
+| 4 | Escolha do gráfico |
+| 5 | Prática guiada |
+| 6 | Governança e publicação no GovHub |
+
+Em cada nível, faça primeiro os itens **essenciais**; os de **apoio/opcionais** vêm quando forem
+necessários.
+
+- Versão visual, com progresso salvo no navegador: [roadmap.html](roadmap.html)
+- Versão em texto: [docs/trilhas/index.md](docs/trilhas/index.md)
+- Fonte única: [ROADMAP.md](ROADMAP.md)
+
+### Formato dos itens
+
+```
+- [tipo] **Título** — papel — `caminho/para/doc.md`
+```
+
+- **tipo**: `tutorial` · `how-to` · `reference` · `explanation` · `challenge` · `research`
+- **papel**: `core` · `support` · `capstone` · `optional` · `advanced`
+
+---
+
+## 5. Status do conteúdo
+
+Nem toda página está escrita. As que ainda não estão carregam o marcador
+`Rascunho — a escrever` logo abaixo do título e preservam a estrutura de tópicos do levantamento
+original, para que ninguém precise redescobrir o escopo.
+
+**Escrito:** fundamentos conceituais, arquitetura da informação, hierarquia visual e KPIs, escolha do
+gráfico e o catálogo completo de visuais (Superset e Power BI).
+
+**A escrever:** design visual, acessibilidade e paletas; storytelling; a prática guiada; os guias
+técnicos; e os padrões de governança GovHub — estes últimos dependem de levantamento com a equipe da
+plataforma.
+
+---
+
+## 6. Pré-visualizar localmente
+
+É um site estático; qualquer host serve como está.
+
+```bash
+python3 -m http.server 8000        # na raiz do repositório
+# abrir http://localhost:8000/  (Início)  e  /roadmap.html
+```
+
+---
+
+## 7. Como editar e contribuir
+
+### 7.1 Editar uma página de conteúdo
+
+1. Escolha o quadrante: aprender (`tutoriais`), fazer (`guias`), consultar (`referencia`), entender
+   (`explicacao`).
+2. Abra o arquivo na pasta correspondente em `docs/`.
+3. Siga o template em `templates/` — há um por tipo de página.
+4. Mantenha o cabeçalho `> Tipo: **X**` logo abaixo do título.
+
+Material de apoio (dados, temas, wireframes) vai em `exemplos/`.
+
+### 7.2 Editar a trilha
+
+Edite **apenas** `ROADMAP.md` e rode:
+
+```bash
+python3 tools/gen_roadmap.py
+```
+
+Isso regenera `roadmap.html`, `roadmap-dashboards.xmind` e `docs/trilhas/index.md`. O gerador
+**valida** tipos e papéis e falha com mensagem clara em caso de erro de digitação. Ele também **cria um
+esqueleto** para todo `.md` referenciado que ainda não exista, e **nunca renomeia** caminhos (vários
+nós podem apontar para o mesmo documento de propósito).
+
+### 7.3 Arquivos gerados — não edite à mão
+
+- `roadmap.html` — **apenas** a região entre `<!-- ROADMAP:START -->` e `<!-- ROADMAP:END -->`. Todo o
+  resto (design, CSS, JS) você pode editar livremente.
+- `index.html` — apenas a região entre `<!-- LEVELS:START -->` e `<!-- LEVELS:END -->`.
+- `roadmap-dashboards.xmind`
+- `docs/trilhas/index.md`
+
+### 7.4 Publicar
+
+Não há deploy automatizado. O repositório é um site estático:
+
+```bash
+git add -A && git commit -m "docs: ..." && git push
+```
+
+---
+
+## 8. Origem do conteúdo
+
+O conteúdo desta trilha vem do levantamento de conteúdos elaborado pela equipe (versões V1, V2 e V3 do
+documento de trabalho), incluindo a seção de metodologia que mapeia a ementa para os quatro tipos do
+Diátaxis. A estrutura do repositório — trilha com fonte única, gerador, visualizador de Markdown e
+organização Diátaxis — foi reaproveitada de um handbook anterior construído com as mesmas premissas.
