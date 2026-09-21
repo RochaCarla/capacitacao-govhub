@@ -24,6 +24,10 @@ Nem toda informação tem o mesmo valor. Alguns indicadores são fundamentais pa
 geral; outros servem para complementar a análise. Os mais importantes devem receber maior destaque
 visual — ninguém deveria precisar procurar os números que mais importam.
 
+A mesma informação, com e sem hierarquia:
+
+![Dois painéis com os mesmos indicadores. À esquerda, seis caixas do mesmo tamanho e cor, sem ponto de partida. À direita, um indicador principal grande e destacado, com os demais reduzidos a apoio.](../../assets/ilustracoes/hierarquia-visual.svg)
+
 ### Os instrumentos da hierarquia
 
 | Instrumento | Como cria hierarquia |

@@ -8,6 +8,8 @@ Diversos estudos de usabilidade mostram que as pessoas percorrem interfaces segu
 previsíveis. Conhecer esses padrões permite posicionar a informação mais importante no caminho natural
 do olhar, em vez de esperar que alguém a encontre por acaso.
 
+![Dois wireframes de dashboard. No padrão F, o olhar percorre a faixa superior, desce pela lateral esquerda e explora o centro. No padrão Z, vai do topo esquerdo ao topo direito, cruza para o centro e termina na parte inferior.](../../assets/ilustracoes/fluxo-de-leitura-f-e-z.svg)
+
 ## Padrão F
 
 Muito usado em telas com grande quantidade de informação. O olhar tende a:

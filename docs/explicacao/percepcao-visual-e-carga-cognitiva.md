@@ -59,6 +59,8 @@ meio de:
 - comparações relevantes;
 - alertas e exceções claramente identificados.
 
+![Três painéis com os mesmos doze indicadores. No primeiro, todos têm o mesmo peso visual e é preciso procurar. No segundo, todos estão coloridos e a disputa por atenção continua. No terceiro, um único indicador recebe destaque e é encontrado de imediato.](../../assets/ilustracoes/atencao-visual.svg)
+
 A pessoa deve ser conduzida naturalmente pela informação, sem precisar procurar onde está o que
 interessa.
 

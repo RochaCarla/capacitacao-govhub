@@ -47,6 +47,14 @@ real ou quase real.
 
 Não existe uma opção melhor que a outra. Existe a opção mais adequada para cada necessidade.
 
+```mermaid
+flowchart LR
+    Q{"Que pergunta a<br>pessoa traz?"}
+    Q -->|"Estamos indo na<br>direção certa?"| D["Dashboard estratégico<br>gestão, coordenação, direção<br>KPIs, metas, tendências"]
+    Q -->|"Por que isso<br>aconteceu?"| R["Relatório analítico<br>analistas, auditoria<br>tabelas, segmentações, exportação"]
+    Q -->|"O que precisa ser<br>feito agora?"| O["Painel operacional<br>equipes, supervisão<br>filas, alertas, tempo real"]
+```
+
 | Use… | Quando | Exemplo |
 |---|---|---|
 | **Dashboard estratégico** | acompanhar resultados, avaliar desempenho, comparar períodos, monitorar metas, apoiar decisões gerenciais | uma gestora quer saber se o número de atendimentos aumentou e se as metas estão sendo alcançadas |

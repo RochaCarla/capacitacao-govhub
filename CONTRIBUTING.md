@@ -98,7 +98,50 @@ lugar onde se mexe nelas, e vale para `index.html`, `roadmap.html` e `doc.html`.
   pelo rótulo e pelo estilo da borda.
 - O porquê de cada decisão está na [ADR 0002](docs/adr/0002-identidade-visual-govhub.md).
 
-## 4. Pré-visualizar
+## 4. Diagramas e ilustrações
+
+Uma página que descreve um **processo, uma decisão ou uma sequência** pede um diagrama. Uma que
+descreve um **arranjo visual** — posição na tela, destaque, leitura — pede uma ilustração.
+
+### Diagramas: Mermaid, no próprio Markdown
+
+Escreva em um bloco ` ```mermaid `. Funciona no GitHub e no visualizador `doc.html`, e o diagrama
+continua sendo texto — revisável em diff, sem arquivo binário para manter.
+
+````
+```mermaid
+flowchart LR
+    Q{"Que pergunta a<br>pessoa traz?"} -->|"Por que isso aconteceu?"| R["Relatório analítico"]
+```
+````
+
+Convenções:
+
+- **Uma direção só**: `flowchart LR` na maioria dos casos. Fluxos verticais com losangos crescem
+  demais e deixam de caber na coluna de texto.
+- **Losango só para decisão de verdade.** Cada `{"..."}` vira um losango grande; etapas que não são
+  escolha vão em caixa retangular.
+- **Rótulo curto, quebrado com `<br>`.** Duas linhas de até ~30 caracteres.
+- **Um diagrama por página.** Se precisar de dois, provavelmente são duas páginas.
+- O diagrama **não substitui o texto**: ele mostra o caminho que o texto explica. Nada de informação
+  que só existe no desenho.
+
+### Ilustrações: SVG em `assets/ilustracoes/`
+
+Para mostrar arranjo na tela — zonas do layout, padrões de leitura, hierarquia — use um SVG e
+referencie com Markdown normal:
+
+```markdown
+![Descrição do que a imagem mostra, para quem usa leitor de tela.](../../assets/ilustracoes/arquivo.svg)
+```
+
+- **Fundo branco explícito** (`<rect width=... fill="#ffffff"/>`): sem ele a ilustração fica ilegível
+  no tema escuro do GitHub.
+- **Cores da marca** (`assets/govhub.css`) e texto de no mínimo 11px.
+- **`<title>` e `<desc>` dentro do SVG**, além do texto alternativo no Markdown.
+- O texto alternativo descreve **o que a imagem ensina**, não o que ela contém.
+
+## 5. Pré-visualizar
 
 ```bash
 python3 -m http.server 8000
@@ -106,13 +149,13 @@ python3 -m http.server 8000
 
 E abra <http://localhost:8000/>.
 
-## 5. Decisões estruturais
+## 6. Decisões estruturais
 
 Mudanças na forma como o material é organizado — não no conteúdo de uma página — vão para
 `docs/adr/`, seguindo o formato de [ADR 0001](docs/adr/0001-mapeamento-diataxis-do-levantamento.md):
 contexto, decisão, consequências, alternativas consideradas.
 
-## 6. Commits
+## 7. Commits
 
 Prefixo por tipo de mudança:
 

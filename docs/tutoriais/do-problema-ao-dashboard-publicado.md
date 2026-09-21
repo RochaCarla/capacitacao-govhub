@@ -9,6 +9,27 @@
 ## O que você vai construir
 _Um dashboard completo, de uma pergunta de negócio real até a publicação no GovHub._
 
+```mermaid
+flowchart LR
+    subgraph A["Antes de abrir a ferramenta"]
+        direction TB
+        P1["1. Entendimento<br>do problema"] --> P2["2. Público-alvo"] --> P3["3. Seleção<br>de KPIs"] --> P4["4. Escolha<br>dos gráficos"] --> P5["5. Wireframe"]
+    end
+    subgraph B["Na ferramenta"]
+        direction TB
+        P6a["6a. Superset"]
+        P6b["6b. Power BI"]
+    end
+    subgraph C["Antes do público"]
+        direction TB
+        P7["7. Revisão<br>de qualidade"] --> P8["8. Checklist final"] --> P9["9. Publicação"]
+    end
+    P5 --> P6a
+    P5 --> P6b
+    P6a --> P7
+    P6b --> P7
+```
+
 ## O que você vai aprender
 - Traduzir um problema em perguntas que um painel pode responder.
 - Selecionar KPIs e escolher os gráficos correspondentes.

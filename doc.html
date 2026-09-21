@@ -44,6 +44,15 @@
   .doc hr{border:0;border-top:1px solid var(--line);margin:1.6em 0}
   .doc img{max-width:100%}
   .doc ul,.doc ol{padding-left:1.5em}
+  .doc figure{margin:1.4em 0;text-align:center}
+  .doc figcaption{font-size:.85rem;color:var(--muted);margin-top:.5em}
+  .doc .mermaid{margin:1.6em 0;text-align:center;overflow-x:auto}
+  .doc .mermaid svg{max-width:100%;height:auto}
+  /* O Mermaid dimensiona cada caixa medindo o rótulo a 15px, mas o rótulo é HTML
+     dentro do SVG e herdaria os 16px da página — o texto estouraria a caixa. */
+  .doc .mermaid foreignObject div,.doc .mermaid foreignObject span,
+  .doc .mermaid foreignObject p{font-size:15px;line-height:1.35;margin:0}
+
 
   .msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;color:var(--muted)}
   .msg a{color:var(--accent)}
@@ -65,6 +74,7 @@
 <footer id="foot"></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
   function getPath(){
     var p = new URLSearchParams(location.search).get('path') || 'README.md';
@@ -100,6 +110,46 @@
       img.setAttribute('src', resolve(path, s));
     });
   }
+  // Blocos ```mermaid viram diagramas. Sem a biblioteca (CDN bloqueado), o bloco
+  // continua visível como código — o conteúdo nunca desaparece.
+  function renderDiagramas(root){
+    var blocos = root.querySelectorAll('pre > code.language-mermaid');
+    if(!blocos.length || typeof mermaid === 'undefined') return;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      fontSize: 15,
+      fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif",
+      // useMaxWidth:false — com true, o Mermaid estica diagramas pequenos até a largura
+      // da página e o texto muda de escala entre um diagrama e outro.
+      flowchart: { padding: 12, nodeSpacing: 45, rankSpacing: 55, useMaxWidth: false },
+      themeVariables: {
+        primaryColor: '#F3EEFE', primaryTextColor: '#202020', primaryBorderColor: '#7A34F3',
+        secondaryColor: '#FDF0E1', secondaryTextColor: '#202020', secondaryBorderColor: '#C2410C',
+        tertiaryColor: '#ffffff', tertiaryBorderColor: '#e4e1ee',
+        lineColor: '#5B21B6', textColor: '#202020', fontSize: '15px'
+      }
+    });
+    // Sem esperar a fonte, o Mermaid mede as caixas com a métrica errada e corta os
+    // rótulos. E cada diagrama é desenhado por mermaid.render: mermaid.run() desenha
+    // todos dentro do primeiro bloco quando a página tem mais de um.
+    var fontes = (document.fonts && document.fonts.load)
+      ? document.fonts.load("15px Inter").then(function(){ return document.fonts.ready; })
+      : Promise.resolve();
+    fontes.then(function(){
+      Array.prototype.forEach.call(blocos, function(code, i){
+        var fonte = code.textContent;
+        var div = document.createElement('div');
+        div.className = 'mermaid';
+        code.parentNode.replaceWith(div);
+        mermaid.render('diagrama-' + i, fonte)
+          .then(function(r){ div.innerHTML = r.svg; })
+          .catch(function(){ div.innerHTML = '<pre><code>' + fonte.replace(/[&<>]/g, function(ch){
+            return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]; }) + '</code></pre>'; });
+      });
+    });
+  }
+
   function show(html){ document.getElementById('content').innerHTML = html; }
 
   var path = getPath();
@@ -116,6 +166,7 @@
       content.innerHTML = marked.parse(md);
       addHeadingIds(content);
       fixLinks(content, path);
+      renderDiagramas(content);
       var h1 = content.querySelector('h1');
       document.title = (h1 ? h1.textContent : path) + ' · Dashboards GovHub';
       document.getElementById('foot').innerHTML =

@@ -33,6 +33,17 @@ A resposta indica a família de visual:
 A melhor escolha não é o gráfico mais bonito. É o gráfico que permite encontrar a resposta mais
 rapidamente.
 
+O caminho completo da decisão, da pergunta até o desempate:
+
+```mermaid
+flowchart LR
+    P{"O que entender<br>em 5 segundos?"} --> F["Família do visual<br>tempo · comparação · participação · distribuição<br>relação · localização · detalhamento"]
+    F --> K["Qual KPI esse gráfico sustenta?<br>o indicador dá a leitura imediata;<br>o gráfico explica o número"]
+    K --> E{"Dois visuais<br>empatam?"}
+    E -->|não| U(["Use o que responde"])
+    E -->|sim| M(["Prefira o que exige<br>menos explicação"])
+```
+
 ### Exemplo: evolução ao longo do tempo
 
 Perguntas típicas:

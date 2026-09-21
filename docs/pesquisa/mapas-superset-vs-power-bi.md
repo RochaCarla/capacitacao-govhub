@@ -58,6 +58,16 @@ análises com múltiplas camadas.
 A recomendação prática é começar pelo Superset e escalar para o Azure Maps apenas quando uma pergunta
 concreta exigir um recurso que ele não oferece.
 
+```mermaid
+flowchart LR
+    Q{"O que a pergunta<br>precisa mostrar?"} -->|"onde ocorreu"| M["Maps<br>(Superset)"]
+    Q -->|"onde ocorreu e<br>em que volume"| B["Bubble Maps<br>(Superset)"]
+    M --> V{"Falta algum<br>recurso?"}
+    B --> V
+    V -->|não| F(["Fique no Superset"])
+    V -->|"rotas, áreas de influência,<br>múltiplas camadas, heat map"| A(["Escale para o Azure Maps<br>(Power BI)"])
+```
+
 ## Limitações
 
 Este estudo não avalia desempenho com grandes volumes de pontos, custo de licenciamento, restrições de

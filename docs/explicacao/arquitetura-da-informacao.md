@@ -24,6 +24,10 @@ Um dashboard bem estruturado deixa claro:
 - onde aprofundar a análise;
 - como chegar aos detalhes quando necessário.
 
+As três faixas de um painel bem estruturado, de cima para baixo:
+
+![Wireframe de dashboard em três faixas. No topo, os KPIs principais como resumo executivo. No meio, os gráficos que explicam esses números, próximos ao indicador que sustentam. Embaixo, a tabela detalhada, disponível mas sem competir pela atenção.](../../assets/ilustracoes/zonas-do-layout.svg)
+
 ### Destaques visuais
 
 Nem toda informação tem a mesma importância. Os dados mais relevantes devem se destacar naturalmente

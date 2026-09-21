@@ -33,6 +33,16 @@ informações pertencem à mesma página.
 O inverso também vale: se uma página exige rolagem longa e mistura assuntos que nunca são lidos
 juntos, ela pede divisão.
 
+Os dois critérios, em sequência:
+
+```mermaid
+flowchart LR
+    Q{"Como é o<br>conteúdo?"} -->|"assunto simples, indicadores<br>relacionados, visão rápida"| U["Uma única página"]
+    Q -->|"temas diferentes, públicos<br>distintos, volume elevado"| M["Múltiplas páginas"]
+    U -.->|"rolagem longa, assuntos<br>nunca lidos juntos"| M
+    M -.->|"uma pergunta única exige<br>abrir mais de uma aba"| U
+```
+
 ## Trade-offs e alternativas
 
 Múltiplas páginas melhoram a legibilidade de cada tela, mas fragmentam a análise e multiplicam o custo

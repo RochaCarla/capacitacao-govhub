@@ -47,6 +47,21 @@ Quando uma análise depende de aplicar filtros, ordenar colunas, fazer somas man
 visualmente e comparar períodos diferentes, a pessoa está realizando um trabalho que poderia ser
 automatizado.
 
+O mesmo pedido — "os atendimentos caíram?" — percorre caminhos bem diferentes:
+
+```mermaid
+flowchart TD
+    subgraph P["Na planilha · o caminho se repete a cada pergunta"]
+        direction LR
+        P1["Abrir a base"] --> P2["Filtrar<br>colunas"] --> P3["Ordenar"] --> P4["Somar<br>à mão"] --> P5["Comparar<br>períodos"] --> P6(["Resposta"])
+    end
+    subgraph D["No dashboard · o caminho foi percorrido uma vez, na construção"]
+        direction LR
+        D1["Abrir o painel"] --> D2(["Resposta"])
+    end
+    P ~~~ D
+```
+
 Com um dashboard:
 
 - as principais métricas já estão calculadas;

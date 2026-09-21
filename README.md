@@ -86,7 +86,8 @@ Dashboards-Roadmap/
 ├── roadmap.html                 gen · trilha visual com progresso
 ├── doc.html                     visualizador de Markdown
 ├── roadmap-dashboards.xmind     gen · mapa mental
-├── assets/                      identidade visual: tokens, logotipo e favicon
+├── assets/                      identidade visual: tokens, logotipo, favicon
+│   └── ilustracoes/             SVGs didáticos usados nas páginas
 ├── tools/gen_roadmap.py         ROADMAP.md -> html + xmind + trilhas
 ├── docs/
 │   ├── tutoriais/  guias/  referencia/  explicacao/  desafios/  pesquisa/
