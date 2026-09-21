@@ -1,0 +1,68 @@
+name: Publicar no GitHub Pages
+
+# O site é estático: não há build. O pipeline existe para garantir que o que vai
+# ao ar corresponde ao ROADMAP.md — a fonte única da trilha.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Uma publicação por vez; nunca cancela uma que já está no ar.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verificar:
+    name: Verificar a trilha
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Regenerar a partir do ROADMAP.md
+        run: python3 tools/gen_roadmap.py
+
+      - name: Conferir se os arquivos gerados estão em dia
+        run: |
+          # O .xmind fica de fora: o zip carrega carimbo de tempo e muda a cada
+          # execução, mesmo sem mudança de conteúdo.
+          pendente=$(git status --porcelain --untracked-files=all -- roadmap.html index.html docs/)
+          if [ -n "$pendente" ]; then
+            echo "::error::Rodar 'python3 tools/gen_roadmap.py' mudou arquivos versionados — o ROADMAP.md foi editado sem regenerar, ou falta commitar o esqueleto de uma página nova."
+            echo "$pendente"
+            git --no-pager diff -- roadmap.html index.html docs/
+            exit 1
+          fi
+          echo "Arquivos gerados em dia."
+
+
+  publicar:
+    name: Publicar
+    needs: verificar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      # O site vai como está — doc.html lê os .md em tempo de execução, então
+      # o repositório inteiro precisa estar publicado.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

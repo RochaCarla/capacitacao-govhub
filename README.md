@@ -207,11 +207,16 @@ como texto sobre branco. O raciocínio completo está na [ADR 0002](docs/adr/000
 
 ### 7.5 Publicar
 
-Não há deploy automatizado. O repositório é um site estático:
+Todo push na `main` publica o site no GitHub Pages:
 
 ```bash
 git add -A && git commit -m "docs: ..." && git push
 ```
+
+O workflow `.github/workflows/publicar.yml` roda `tools/gen_roadmap.py` antes de publicar e **falha
+se algum arquivo gerado estiver desatualizado** — ou seja, se alguém editou o `ROADMAP.md` sem
+regenerar, ou esqueceu de commitar o esqueleto de uma página nova. Não há build: o site vai ao ar como
+está no repositório, porque `doc.html` lê os `.md` em tempo de execução.
 
 ---
 
