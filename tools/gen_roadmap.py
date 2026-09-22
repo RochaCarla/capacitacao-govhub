@@ -5,7 +5,8 @@ Gera os artefatos da trilha a partir da fonte única ROADMAP.md.
 Etapas:
   1. Lê e valida ROADMAP.md (tipos/papéis).
   2. Cria um esqueleto para todo .md referenciado que ainda não existe (nunca sobrescreve).
-  3. Regenera: roadmap.html, roadmap-dashboards.xmind e docs/trilhas/index.md.
+  3. Regenera: roadmap.html, roadmap-dashboards.xmind, docs/trilhas/index.md e
+     docs/trilhas/trilha.json (índice que a página de conteúdo usa para marcar 'feito').
      Cada conceito abre pelo visualizador doc.html (Markdown -> HTML).
 
 Caminhos repetidos são permitidos (vários nós da trilha podem apontar para o mesmo documento);
@@ -21,6 +22,8 @@ OUT_HTML     = os.path.join(REPO, "roadmap.html")
 OUT_XMIND    = os.path.join(REPO, "roadmap-dashboards.xmind")
 OUT_TRILHAS  = os.path.join(REPO, "docs", "trilhas", "index.md")
 OUT_INDEX    = os.path.join(REPO, "index.html")
+OUT_TRILHA_JSON = os.path.join(REPO, "docs", "trilhas", "trilha.json")
+PROGRESS_KEY = "govhub-dashboards-roadmap-v1"   # mesma chave em roadmap.html e doc.html
 IDX_END      = "<!-- LEVELS:END -->"
 
 # tipo -> (rótulo, classe CSS, pasta padrão, template do esqueleto)
@@ -225,6 +228,39 @@ def gen_trilhas(levels):
     open(OUT_TRILHAS, "w", encoding="utf-8").write("\n".join(out) + "\n")
 
 
+def gen_trilha_json(levels):
+    """Índice da trilha por documento, consumido por doc.html.
+
+    É o que permite marcar "feito" dentro da página de conteúdo: a página descobre
+    quais nós da trilha apontam para ela e escreve no mesmo progresso do roadmap.
+    Um documento pode aparecer em mais de um nó — daí `ids` ser uma lista; os demais
+    campos descrevem a primeira aparição, que é a usada para situar quem lê.
+    """
+    docs, ordem, seen = {}, [], {}
+    for lv in levels:
+        for it in lv["items"]:
+            base = data_id(it["doc"])
+            seen[base] = seen.get(base, 0) + 1
+            node_id = base if seen[base] == 1 else "%s--%d" % (base, seen[base])
+            if it["doc"] not in docs:
+                docs[it["doc"]] = {
+                    "doc": it["doc"], "ids": [], "titulo": it["title"],
+                    "tipo": TYPE_INFO[it["type"]][0], "papel": ROLE_DISPLAY[it["role"]],
+                    "nivel": lv["num"], "nivel_titulo": lv["title"],
+                }
+                ordem.append(it["doc"])
+            docs[it["doc"]]["ids"].append(node_id)
+
+    dados = {
+        "_aviso": "Gerado por tools/gen_roadmap.py a partir de ROADMAP.md - nao edite a mao.",
+        "chave_progresso": PROGRESS_KEY,
+        "documentos": [docs[d] for d in ordem],
+    }
+    open(OUT_TRILHA_JSON, "w", encoding="utf-8").write(
+        json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+    return len(ordem)
+
+
 def gen_index(levels):
     """Preenche a região LEVELS do index.html com um card por nível (se houver marcadores)."""
     esc = lambda t: htmlmod.escape(t, quote=False)
@@ -259,10 +295,12 @@ def main():
     total = gen_html(levels)
     gen_xmind(levels)
     gen_trilhas(levels)
+    docs_json = gen_trilha_json(levels)
     idx = gen_index(levels)
 
     print("Gerado a partir de ROADMAP.md  (níveis: %d | itens: %d)" % (len(levels), total))
     print("região de níveis do index.html: %s" % ("atualizada" if idx else "sem marcadores, ignorada"))
+    print("índice da trilha (botão Feito): %d documento(s)" % docs_json)
     if dropped:
         print("\nAVISO: %d linha(s) de bullet IGNORADA(S) — não são itens válidos" % len(dropped))
         print("  formato esperado:  - [tipo] **Título** — papel — `caminho`")
@@ -277,7 +315,7 @@ def main():
         print("\nObservações:")
         for w in warns:
             print("   - %s" % w)
-    print("\n-> roadmap.html · roadmap-dashboards.xmind · docs/trilhas/index.md  (links abrem via doc.html)")
+    print("\n-> roadmap.html · roadmap-dashboards.xmind · docs/trilhas/index.md · docs/trilhas/trilha.json")
 
 
 if __name__ == "__main__":

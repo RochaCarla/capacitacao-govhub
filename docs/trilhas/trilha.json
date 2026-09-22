@@ -1,0 +1,490 @@
+{
+  "_aviso": "Gerado por tools/gen_roadmap.py a partir de ROADMAP.md - nao edite a mao.",
+  "chave_progresso": "govhub-dashboards-roadmap-v1",
+  "documentos": [
+    {
+      "doc": "docs/explicacao/por-que-fazer-um-dashboard.md",
+      "ids": [
+        "explicacao/por-que-fazer-um-dashboard"
+      ],
+      "titulo": "Por que fazer um dashboard?",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/explicacao/o-que-faz-um-dashboard-ruim.md",
+      "ids": [
+        "explicacao/o-que-faz-um-dashboard-ruim"
+      ],
+      "titulo": "O que faz um dashboard ruim",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/explicacao/percepcao-visual-e-carga-cognitiva.md",
+      "ids": [
+        "explicacao/percepcao-visual-e-carga-cognitiva"
+      ],
+      "titulo": "Percepção visual e carga cognitiva",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/explicacao/dashboard-relatorio-painel-operacional.md",
+      "ids": [
+        "explicacao/dashboard-relatorio-painel-operacional"
+      ],
+      "titulo": "Dashboard, relatório analítico e painel operacional",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/referencia/perguntas-que-um-dashboard-deve-responder.md",
+      "ids": [
+        "referencia/perguntas-que-um-dashboard-deve-responder"
+      ],
+      "titulo": "Perguntas que um dashboard deve responder",
+      "tipo": "Referência",
+      "papel": "Apoio",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/referencia/glossario.md",
+      "ids": [
+        "referencia/glossario"
+      ],
+      "titulo": "Glossário",
+      "tipo": "Referência",
+      "papel": "Apoio",
+      "nivel": 0,
+      "nivel_titulo": "Fundamentos de visualização de dados"
+    },
+    {
+      "doc": "docs/explicacao/arquitetura-da-informacao.md",
+      "ids": [
+        "explicacao/arquitetura-da-informacao"
+      ],
+      "titulo": "Arquitetura da informação — visão geral",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/fluxo-de-leitura-f-e-z.md",
+      "ids": [
+        "explicacao/fluxo-de-leitura-f-e-z"
+      ],
+      "titulo": "Fluxo de leitura: padrões F e Z",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/indicacao-de-contexto.md",
+      "ids": [
+        "explicacao/indicacao-de-contexto"
+      ],
+      "titulo": "Indicação de contexto",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/estrutura-de-navegacao.md",
+      "ids": [
+        "explicacao/estrutura-de-navegacao"
+      ],
+      "titulo": "Estrutura de navegação: overview, zoom e detalhe",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/organizacao-de-paginas-e-abas.md",
+      "ids": [
+        "explicacao/organizacao-de-paginas-e-abas"
+      ],
+      "titulo": "Organização de páginas e abas",
+      "tipo": "Explicação",
+      "papel": "Apoio",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/filtros-e-segmentacao.md",
+      "ids": [
+        "explicacao/filtros-e-segmentacao"
+      ],
+      "titulo": "Filtros e segmentação",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 1,
+      "nivel_titulo": "Arquitetura da informação"
+    },
+    {
+      "doc": "docs/explicacao/hierarquia-visual.md",
+      "ids": [
+        "explicacao/hierarquia-visual"
+      ],
+      "titulo": "Hierarquia visual",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 2,
+      "nivel_titulo": "Hierarquia visual e storytelling"
+    },
+    {
+      "doc": "docs/explicacao/kpis-e-big-numbers.md",
+      "ids": [
+        "explicacao/kpis-e-big-numbers"
+      ],
+      "titulo": "KPIs e Big Numbers",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 2,
+      "nivel_titulo": "Hierarquia visual e storytelling"
+    },
+    {
+      "doc": "docs/explicacao/storytelling-com-dados.md",
+      "ids": [
+        "explicacao/storytelling-com-dados"
+      ],
+      "titulo": "Storytelling e comunicação com dados",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 2,
+      "nivel_titulo": "Hierarquia visual e storytelling"
+    },
+    {
+      "doc": "docs/explicacao/vies-e-distorcao-nos-dados.md",
+      "ids": [
+        "explicacao/vies-e-distorcao-nos-dados"
+      ],
+      "titulo": "Viés e distorção na apresentação dos dados",
+      "tipo": "Explicação",
+      "papel": "Apoio",
+      "nivel": 2,
+      "nivel_titulo": "Hierarquia visual e storytelling"
+    },
+    {
+      "doc": "docs/explicacao/consistencia-visual.md",
+      "ids": [
+        "explicacao/consistencia-visual"
+      ],
+      "titulo": "Consistência visual: tipografia, grid e alinhamento",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/referencia/paletas-e-significado-das-cores.md",
+      "ids": [
+        "referencia/paletas-e-significado-das-cores"
+      ],
+      "titulo": "Paletas e significado das cores",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/explicacao/acessibilidade-em-dashboards.md",
+      "ids": [
+        "explicacao/acessibilidade-em-dashboards"
+      ],
+      "titulo": "Acessibilidade em dashboards (eMAG e WCAG)",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/referencia/checklist-de-acessibilidade.md",
+      "ids": [
+        "referencia/checklist-de-acessibilidade"
+      ],
+      "titulo": "Checklist de acessibilidade",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/explicacao/interatividade.md",
+      "ids": [
+        "explicacao/interatividade"
+      ],
+      "titulo": "Interatividade: filtros, drill-down e drill-through",
+      "tipo": "Explicação",
+      "papel": "Apoio",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/explicacao/experiencia-do-usuario-e-performance.md",
+      "ids": [
+        "explicacao/experiencia-do-usuario-e-performance"
+      ],
+      "titulo": "Experiência do usuário e performance",
+      "tipo": "Explicação",
+      "papel": "Apoio",
+      "nivel": 3,
+      "nivel_titulo": "Design visual e acessibilidade"
+    },
+    {
+      "doc": "docs/explicacao/qual-e-o-grafico-certo.md",
+      "ids": [
+        "explicacao/qual-e-o-grafico-certo"
+      ],
+      "titulo": "Qual é o gráfico certo para o meu dado?",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/explicacao/erros-comuns-na-escolha-do-grafico.md",
+      "ids": [
+        "explicacao/erros-comuns-na-escolha-do-grafico"
+      ],
+      "titulo": "Erros mais comuns na escolha do gráfico",
+      "tipo": "Explicação",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/guia-rapido-pergunta-para-grafico.md",
+      "ids": [
+        "referencia/guia-rapido-pergunta-para-grafico"
+      ],
+      "titulo": "Guia rápido: pergunta → gráfico",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-tabelas.md",
+      "ids": [
+        "referencia/graficos-tabelas"
+      ],
+      "titulo": "Tabelas: Table e Pivot Table / Matrix",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-series-temporais.md",
+      "ids": [
+        "referencia/graficos-series-temporais"
+      ],
+      "titulo": "Séries temporais: Line e Area Chart",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-comparacao-entre-categorias.md",
+      "ids": [
+        "referencia/graficos-comparacao-entre-categorias"
+      ],
+      "titulo": "Comparação entre categorias: Bar e Horizontal Bar",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-distribuicao.md",
+      "ids": [
+        "referencia/graficos-distribuicao"
+      ],
+      "titulo": "Distribuição: Histogram e Box Plot",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-partes-de-um-todo.md",
+      "ids": [
+        "referencia/graficos-partes-de-um-todo"
+      ],
+      "titulo": "Partes de um todo: Pie, Donut e Treemap",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-correlacao.md",
+      "ids": [
+        "referencia/graficos-correlacao"
+      ],
+      "titulo": "Correlação: Scatter Plot",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-geoespaciais.md",
+      "ids": [
+        "referencia/graficos-geoespaciais"
+      ],
+      "titulo": "Geoespacial: Maps e Bubble Maps",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/graficos-avancados-power-bi.md",
+      "ids": [
+        "referencia/graficos-avancados-power-bi"
+      ],
+      "titulo": "Visuais avançados do Power BI: Funnel, Decomposition Tree e Waterfall",
+      "tipo": "Referência",
+      "papel": "Apoio",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/referencia/azure-maps.md",
+      "ids": [
+        "referencia/azure-maps"
+      ],
+      "titulo": "Azure Maps (Power BI)",
+      "tipo": "Referência",
+      "papel": "Apoio",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/pesquisa/mapas-superset-vs-power-bi.md",
+      "ids": [
+        "pesquisa/mapas-superset-vs-power-bi"
+      ],
+      "titulo": "Mapas: Superset vs. Power BI",
+      "tipo": "Pesquisa",
+      "papel": "Apoio",
+      "nivel": 4,
+      "nivel_titulo": "Escolha do gráfico"
+    },
+    {
+      "doc": "docs/tutoriais/do-problema-ao-dashboard-publicado.md",
+      "ids": [
+        "tutoriais/do-problema-ao-dashboard-publicado"
+      ],
+      "titulo": "Do problema ao dashboard publicado",
+      "tipo": "Tutorial",
+      "papel": "Capstone",
+      "nivel": 5,
+      "nivel_titulo": "Prática guiada"
+    },
+    {
+      "doc": "docs/guias/adicionar-filtro-no-superset.md",
+      "ids": [
+        "guias/adicionar-filtro-no-superset"
+      ],
+      "titulo": "Adicionar um filtro no Superset",
+      "tipo": "Guia",
+      "papel": "Apoio",
+      "nivel": 5,
+      "nivel_titulo": "Prática guiada"
+    },
+    {
+      "doc": "docs/guias/criar-tema-de-cores-no-power-bi.md",
+      "ids": [
+        "guias/criar-tema-de-cores-no-power-bi"
+      ],
+      "titulo": "Criar um tema de cores no Power BI (JSON)",
+      "tipo": "Guia",
+      "papel": "Apoio",
+      "nivel": 5,
+      "nivel_titulo": "Prática guiada"
+    },
+    {
+      "doc": "docs/guias/configurar-tab-order-no-power-bi.md",
+      "ids": [
+        "guias/configurar-tab-order-no-power-bi"
+      ],
+      "titulo": "Configurar a ordem de leitura (tab order) no Power BI",
+      "tipo": "Guia",
+      "papel": "Apoio",
+      "nivel": 5,
+      "nivel_titulo": "Prática guiada"
+    },
+    {
+      "doc": "docs/desafios/dashboard-ruim-para-dashboard-bom.md",
+      "ids": [
+        "desafios/dashboard-ruim-para-dashboard-bom"
+      ],
+      "titulo": "Transformar um dashboard ruim em um dashboard bom",
+      "tipo": "Desafio",
+      "papel": "Capstone",
+      "nivel": 5,
+      "nivel_titulo": "Prática guiada"
+    },
+    {
+      "doc": "docs/referencia/padroes-e-governanca-govhub.md",
+      "ids": [
+        "referencia/padroes-e-governanca-govhub"
+      ],
+      "titulo": "Padrões e governança GovHub",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 6,
+      "nivel_titulo": "Governança e publicação no GovHub"
+    },
+    {
+      "doc": "docs/referencia/checklist-final-de-qualidade.md",
+      "ids": [
+        "referencia/checklist-final-de-qualidade"
+      ],
+      "titulo": "Checklist final de qualidade antes de publicar",
+      "tipo": "Referência",
+      "papel": "Essencial",
+      "nivel": 6,
+      "nivel_titulo": "Governança e publicação no GovHub"
+    },
+    {
+      "doc": "docs/guias/publicar-e-homologar-no-govhub.md",
+      "ids": [
+        "guias/publicar-e-homologar-no-govhub"
+      ],
+      "titulo": "Publicar e homologar um dashboard no GovHub",
+      "tipo": "Guia",
+      "papel": "Essencial",
+      "nivel": 6,
+      "nivel_titulo": "Governança e publicação no GovHub"
+    },
+    {
+      "doc": "docs/referencia/papeis-e-permissoes.md",
+      "ids": [
+        "referencia/papeis-e-permissoes"
+      ],
+      "titulo": "Papéis e permissões",
+      "tipo": "Referência",
+      "papel": "Apoio",
+      "nivel": 6,
+      "nivel_titulo": "Governança e publicação no GovHub"
+    }
+  ]
+}

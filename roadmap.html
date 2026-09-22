@@ -110,7 +110,7 @@
   <h1>Trilha de capacitação em Dashboards</h1>
   <p>Do "por que um dashboard" ao dashboard publicado no GovHub. Siga a espinha de cima para baixo;
   cada nível tem itens <b>essenciais</b> (faça todos) e itens de <b>apoio</b> (opcionais / aprofundamento).
-  Marque o que concluir — seu progresso fica salvo neste navegador.</p>
+  Marque o que concluir aqui ou dentro de cada página — seu progresso fica salvo neste navegador.</p>
 </div></header>
 
 <div class="progress-bar"><div class="wrap">
@@ -275,6 +275,15 @@ marcos de avaliação — bons momentos para revisar em dupla com quem já publi
     });
   });
   document.getElementById("reset").addEventListener("click", function(){ done = {}; save(); render(); });
+
+  // O mesmo progresso é escrito pelo botão "Feito" das páginas de conteúdo (doc.html).
+  function recarregar(){
+    try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ done = {}; }
+    render();
+  }
+  window.addEventListener("storage", function(ev){ if(ev.key === KEY) recarregar(); });
+  // voltar do conteúdo pode restaurar esta página do cache do navegador, sem rodar o script
+  window.addEventListener("pageshow", function(ev){ if(ev.persisted) recarregar(); });
   render();
 </script>
 </body>

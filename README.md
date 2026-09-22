@@ -93,6 +93,7 @@ Dashboards-Roadmap/
 │   ├── tutoriais/  guias/  referencia/  explicacao/  desafios/  pesquisa/
 │   ├── adr/                     decisões de arquitetura do material
 │   ├── trilhas/index.md         gen · trilha em texto
+│   ├── trilhas/trilha.json      gen · índice que liga cada página ao seu nó da trilha
 │   └── index.md                 índice da documentação
 ├── exemplos/                    dados, temas e wireframes de apoio
 └── templates/                   um template por tipo de página
@@ -123,6 +124,8 @@ Em cada nível, faça primeiro os itens **essenciais**; os de **apoio/opcionais*
 necessários.
 
 - Versão visual, com progresso salvo no navegador: [roadmap.html](roadmap.html)
+- O progresso também pode ser marcado **de dentro de cada página**: quem está lendo clica em
+  *Marcar como feito* e a trilha registra. É o mesmo progresso, nos dois lugares.
 - Versão em texto: [docs/trilhas/index.md](docs/trilhas/index.md)
 - Fonte única: [ROADMAP.md](ROADMAP.md)
 
@@ -183,7 +186,8 @@ Edite **apenas** `ROADMAP.md` e rode:
 python3 tools/gen_roadmap.py
 ```
 
-Isso regenera `roadmap.html`, `roadmap-dashboards.xmind` e `docs/trilhas/index.md`. O gerador
+Isso regenera `roadmap.html`, `roadmap-dashboards.xmind`, `docs/trilhas/index.md` e
+`docs/trilhas/trilha.json`. O gerador
 **valida** tipos e papéis e falha com mensagem clara em caso de erro de digitação. Ele também **cria um
 esqueleto** para todo `.md` referenciado que ainda não exista, e **nunca renomeia** caminhos (vários
 nós podem apontar para o mesmo documento de propósito).
@@ -205,6 +209,7 @@ como texto sobre branco. O raciocínio completo está na [ADR 0002](docs/adr/000
 - `index.html` — apenas a região entre `<!-- LEVELS:START -->` e `<!-- LEVELS:END -->`.
 - `roadmap-dashboards.xmind`
 - `docs/trilhas/index.md`
+- `docs/trilhas/trilha.json`
 
 ### 7.5 Publicar
 

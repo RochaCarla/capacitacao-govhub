@@ -59,8 +59,12 @@ Edite **apenas** [ROADMAP.md](ROADMAP.md). Depois rode:
 python3 tools/gen_roadmap.py
 ```
 
-Isso regenera `roadmap.html`, `roadmap-dashboards.xmind`, `docs/trilhas/index.md` e a região de níveis
-de `index.html`.
+Isso regenera `roadmap.html`, `roadmap-dashboards.xmind`, `docs/trilhas/index.md`,
+`docs/trilhas/trilha.json` e a região de níveis de `index.html`.
+
+O `trilha.json` é o que liga uma página de conteúdo ao seu nó na trilha — é dele que sai o botão
+*Marcar como feito* no fim de cada página. Página nova no `ROADMAP.md` ganha o botão sozinha, ao
+rodar o gerador.
 
 ### Formato do item
 
@@ -84,7 +88,8 @@ Caminhos repetidos são permitidos: vários nós podem apontar para o mesmo docu
 - a região entre `<!-- ROADMAP:START -->` e `<!-- ROADMAP:END -->` em `roadmap.html`;
 - a região entre `<!-- LEVELS:START -->` e `<!-- LEVELS:END -->` em `index.html`;
 - `roadmap-dashboards.xmind`;
-- `docs/trilhas/index.md`.
+- `docs/trilhas/index.md`;
+- `docs/trilhas/trilha.json`.
 
 Tudo o mais em `roadmap.html` e `index.html` (design, CSS, JS) é seu.
 

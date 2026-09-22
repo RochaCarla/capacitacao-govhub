@@ -54,6 +54,23 @@
   .doc .mermaid foreignObject p{font-size:15px;line-height:1.35;margin:0}
 
 
+  /* Marcar como feito — mesmo progresso da trilha (roadmap.html) */
+  .crumb{display:flex;align-items:center;gap:10px}
+  .chip-feito{margin-left:auto;font:inherit;font-size:.76rem;font-weight:600;cursor:pointer;white-space:nowrap;
+      border-radius:999px;padding:4px 12px;border:1px solid var(--gh-purple);background:#fff;color:var(--gh-purple)}
+  .chip-feito:hover{background:var(--gh-tint)}
+  .chip-feito[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+  .chip-feito[aria-pressed="true"]:hover{background:var(--green-d);border-color:var(--green-d)}
+  .feito{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px;
+      background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .feito .ctx{color:var(--muted);font-size:.86rem;margin-right:auto}
+  .feito .ctx b{color:var(--ink);font-weight:600}
+  .btn-feito{font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;border-radius:999px;
+      padding:10px 20px;border:2px solid var(--gh-purple);background:#fff;color:var(--gh-purple)}
+  .btn-feito:hover{background:var(--gh-tint)}
+  .btn-feito[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+  .btn-feito[aria-pressed="true"]:hover{background:var(--green-d);border-color:var(--green-d)}
+  .feito .trilha-link{color:var(--accent);font-size:.86rem}
   .msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;color:var(--muted)}
   .msg a{color:var(--accent)}
   footer{max-width:820px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:.82rem}
@@ -70,7 +87,14 @@
 </div></nav>
 
 <div class="crumb" id="crumb"></div>
-<main><div class="doc" id="content"><div class="msg">Carregando…</div></div></main>
+<main>
+  <div class="doc" id="content"><div class="msg">Carregando…</div></div>
+  <div class="feito" id="feito" hidden>
+    <span class="ctx" id="feito-ctx"></span>
+    <button class="btn-feito" id="btn-feito" type="button" aria-pressed="false">Marcar como feito</button>
+    <a class="trilha-link" href="roadmap.html">ver na trilha</a>
+  </div>
+</main>
 <footer id="foot"></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -150,6 +174,61 @@
     });
   }
 
+  // ---- Marcar como feito -------------------------------------------------
+  // O progresso é o mesmo do roadmap.html: um objeto {id do nó: true} em
+  // localStorage. docs/trilhas/trilha.json (gerado do ROADMAP.md) diz quais nós
+  // apontam para este documento — um documento pode aparecer em mais de um nó.
+  var PROGRESSO = 'govhub-dashboards-roadmap-v1';
+  var naTrilha = null;
+
+  function lerProgresso(){
+    try { return JSON.parse(localStorage.getItem(PROGRESSO) || '{}'); } catch(e){ return {}; }
+  }
+  function gravarProgresso(p){
+    try { localStorage.setItem(PROGRESSO, JSON.stringify(p)); } catch(e){}
+  }
+  function estaFeito(){
+    var p = lerProgresso();
+    return naTrilha.ids.every(function(id){ return !!p[id]; });
+  }
+  function pintarFeito(){
+    var feito = estaFeito();
+    [document.getElementById('btn-feito'), document.getElementById('chip-feito')].forEach(function(b, i){
+      if(!b) return;
+      b.setAttribute('aria-pressed', feito ? 'true' : 'false');
+      b.textContent = feito ? (i ? '✓ Feito' : '✓ Feito — desmarcar') : (i ? 'Marcar como feito' : 'Marcar como feito');
+    });
+  }
+  function alternarFeito(){
+    var p = lerProgresso(), feito = estaFeito();
+    naTrilha.ids.forEach(function(id){ if(feito) delete p[id]; else p[id] = true; });
+    gravarProgresso(p);
+    pintarFeito();
+  }
+  function montarFeito(path){
+    return fetch('docs/trilhas/trilha.json')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(trilha){
+        if(!trilha) return;
+        naTrilha = trilha.documentos.filter(function(d){ return d.doc === path; })[0];
+        if(!naTrilha) return;   // página fora da trilha: sem botão
+        document.getElementById('feito-ctx').innerHTML =
+          'Nível ' + naTrilha.nivel + ' · <b>' + naTrilha.nivel_titulo + '</b> · ' +
+          naTrilha.tipo + ' · ' + naTrilha.papel;
+        var crumb = document.getElementById('crumb');
+        var chip = document.createElement('button');
+        chip.className = 'chip-feito'; chip.id = 'chip-feito'; chip.type = 'button';
+        crumb.appendChild(chip);
+        document.getElementById('feito').hidden = false;
+        document.getElementById('btn-feito').addEventListener('click', alternarFeito);
+        chip.addEventListener('click', alternarFeito);
+        // outra aba (a trilha, por exemplo) mexeu no progresso
+        window.addEventListener('storage', function(ev){ if(ev.key === PROGRESSO) pintarFeito(); });
+        pintarFeito();
+      })
+      .catch(function(){});
+  }
+
   function show(html){ document.getElementById('content').innerHTML = html; }
 
   var path = getPath();
@@ -172,6 +251,7 @@
       document.getElementById('foot').innerHTML =
         'Fonte: <code>' + path + '</code> · <a href="' + path + '">ver Markdown</a> · ' +
         '<a href="roadmap.html">voltar para a trilha</a>';
+      montarFeito(path);
       if(location.hash){ var el = document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); }
     })
     .catch(function(e){
