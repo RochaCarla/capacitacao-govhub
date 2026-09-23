@@ -126,6 +126,9 @@ necessários.
 - Versão visual, com progresso salvo no navegador: [roadmap.html](roadmap.html)
 - O progresso também pode ser marcado **de dentro de cada página**: quem está lendo clica em
   *Marcar como feito* e a trilha registra. É o mesmo progresso, nos dois lugares.
+- O progresso vive no navegador de quem estuda: **não sincroniza entre navegadores nem entre
+  dispositivos**, e some se os dados do site forem limpos. Persistir por pessoa exigiria login,
+  que o material não tem.
 - Versão em texto: [docs/trilhas/index.md](docs/trilhas/index.md)
 - Fonte única: [ROADMAP.md](ROADMAP.md)
 

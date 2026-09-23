@@ -122,6 +122,7 @@ def viewer(doc):
 # ----------------------------- roadmap.html -----------------------------
 def gen_html(levels):
     esc = lambda t: htmlmod.escape(t, quote=False)
+    escq = lambda t: htmlmod.escape(t, quote=True)   # para valores de atributo
     seen = {}
 
     def uid(doc):
@@ -139,22 +140,41 @@ def gen_html(levels):
             classes.append("capstone")
         if role == "advanced":
             classes.append("advanced")
-        return ('      <div class="%s" data-id="%s"><button class="check"></button>'
-                '<div class="node-body"><span class="type">%s</span>'
+        # O título vem antes dos metadados: é o que se procura ao varrer a lista.
+        # O botão carrega nome acessível próprio — "botão" sozinho não diz o que faz.
+        return ('      <div class="%s" data-id="%s">'
+                '<button class="check" type="button" aria-pressed="false" aria-label="%s"></button>'
+                '<div class="node-body">'
                 '<a class="node-title" href="%s">%s</a>'
-                '<span class="role">%s</span></div></div>'
-                % (" ".join(classes), esc(uid(it["doc"])), esc(label),
-                   esc(viewer(it["doc"])), esc(it["title"]), ROLE_DISPLAY[role]))
+                '<span class="meta"><span class="type">%s</span> · <span class="role">%s</span></span>'
+                '</div></div>'
+                % (" ".join(classes), esc(uid(it["doc"])),
+                   escq("Marcar como concluído: " + it["title"]),
+                   esc(viewer(it["doc"])), esc(it["title"]), esc(label), ROLE_DISPLAY[role]))
 
     def level(lv):
         nodes = "\n".join(node(it) for it in lv["items"])
+        # h2 de verdade: numa página de 44 itens, pular de nível em nível é o recurso
+        # mais usado por quem navega com leitor de tela. O número fica no círculo
+        # (decorativo) e entra no texto do heading de forma invisível.
         return ('  <div class="level">\n'
-                '    <div class="milestone"><span class="num">%d</span><div><strong>%s</strong>\n'
-                '      <em>%s</em></div></div>\n'
+                '    <div class="milestone" id="nivel-%d"><span class="num" aria-hidden="true">%d</span>\n'
+                '      <div><h2><span class="sr-only">Nível %d · </span>%s</h2>\n'
+                '      <p>%s</p></div></div>\n'
                 '    <div class="nodes">\n%s\n    </div>\n'
-                '  </div>' % (lv["num"], esc(lv["title"]), esc(lv["desc"]), nodes))
+                '  </div>' % (lv["num"], lv["num"], lv["num"], esc(lv["title"]),
+                              esc(lv["desc"]), nodes))
 
-    body = "\n\n".join(level(lv) for lv in levels)
+    def atalhos(levels):
+        """Índice dos níveis — a trilha é uma rolagem longa e tende a crescer."""
+        links = "\n".join(
+            '      <a href="#nivel-%d"><b>%d</b> %s</a>' % (lv["num"], lv["num"], esc(lv["title"]))
+            for lv in levels)
+        return ('  <nav class="atalhos" aria-label="Níveis da trilha">\n'
+                '    <span class="atalhos-rot">Ir para:</span>\n'
+                '    <div class="atalhos-lista">\n%s\n    </div>\n  </nav>' % links)
+
+    body = atalhos(levels) + "\n\n" + "\n\n".join(level(lv) for lv in levels)
     html = open(OUT_HTML, encoding="utf-8").read()
     if "<!-- ROADMAP:START" not in html or END_LINE not in html:
         raise SystemExit("Marcadores ROADMAP:START/END não encontrados em roadmap.html")

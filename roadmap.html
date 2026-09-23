@@ -17,11 +17,11 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
-  nav{position:sticky;top:0;z-index:30;background:var(--gh-purple);border-bottom:1px solid var(--gh-purple-d)}
-  nav .wrap{display:flex;gap:18px;align-items:center;padding:11px 20px;flex-wrap:wrap}
-  nav a{color:var(--gh-on-dark);font-size:.86rem}
-  nav a:hover,nav a.active{color:#fff}
-  nav a.active{border-bottom:2px solid var(--gh-orange-l)}
+  body > nav{position:sticky;top:0;z-index:30;background:var(--gh-purple);border-bottom:1px solid var(--gh-purple-d)}
+  body > nav .wrap{display:flex;gap:18px;align-items:center;padding:11px 20px;flex-wrap:wrap}
+  body > nav a{color:var(--gh-on-dark);font-size:.86rem}
+  body > nav a:hover,body > nav a.active{color:#fff}
+  body > nav a.active{border-bottom:2px solid var(--gh-orange-l)}
 
   header.hero{background:linear-gradient(135deg,var(--gh-purple-d),var(--gh-purple));color:#fff;padding:46px 0 36px;text-align:center}
   header.hero h1{margin:0 0 8px;font-size:1.9rem}
@@ -58,15 +58,33 @@
       box-shadow:4px 4px 0 rgba(60,20,120,.85)}
   .milestone .num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;
       display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem}
-  .milestone strong{display:block;font-size:1.02rem}
-  .milestone em{display:block;font-style:normal;font-size:.84rem;color:#4b5563}
+  .milestone h2{display:block;font-size:1.02rem;margin:0;line-height:1.35}
+  .milestone p{margin:2px 0 0;font-size:.84rem;color:#4b5563}
+  /* âncora não pode parar embaixo das barras fixas (nav + progresso) */
+  .milestone{scroll-margin-top:104px}
+
+  /* Índice dos níveis */
+  .atalhos{max-width:880px;margin:4px auto 22px;padding:0 20px;display:flex;gap:10px;
+      align-items:baseline;flex-wrap:wrap;position:relative;z-index:2}
+  .atalhos-rot{font-size:.78rem;color:var(--muted);font-weight:600}
+  .atalhos-lista{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+  .atalhos a{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+      border-radius:999px;padding:5px 12px;font-size:.78rem;color:var(--ink);line-height:1.2}
+  .atalhos a:hover{border-color:var(--gh-purple);background:var(--gh-tint)}
+  .atalhos a b{color:var(--gh-purple);font-weight:800}
+  @media(max-width:600px){.atalhos a{font-size:.74rem;padding:4px 10px}}
 
   .nodes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:880px;margin:0 auto;position:relative;z-index:2}
   @media(max-width:720px){.nodes{grid-template-columns:1fr}}
 
-  .node{background:#fff;border:2px solid var(--line);border-left-width:5px;border-radius:10px;
+  .node{position:relative;background:#fff;border:2px solid var(--line);border-left-width:5px;border-radius:10px;
       padding:10px 12px;display:flex;gap:10px;align-items:flex-start;transition:.12s}
   .node:hover{box-shadow:0 5px 16px rgba(60,20,120,.13);transform:translateY(-1px)}
+  /* o card inteiro abre o documento: o link do título se estica por cima do cartão,
+     sem virar um segundo link para quem usa leitor de tela */
+  .node .node-title::after{content:"";position:absolute;inset:0;border-radius:8px}
+  .node:focus-within{outline:3px solid var(--focus);outline-offset:3px}
+  .node .node-title:focus-visible{outline:none}
   .node.support{border-style:dashed}
   .node.capstone{border-color:var(--red-d);background:#fdece9;box-shadow:0 0 0 2px #f8d5cf inset}
   .node.advanced{border-left-style:double;border-left-width:7px}
@@ -74,20 +92,27 @@
   .node.t-ref{border-left-color:var(--ref)}.node.t-exp{border-left-color:var(--exp)}
   .node.t-des{border-left-color:var(--des)}.node.t-res{border-left-color:var(--res)}
 
-  .check{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid #cbd0da;background:#fff;
-      cursor:pointer;margin-top:2px;position:relative;padding:0}
+  /* z-index acima do link esticado; ::before amplia o alvo de toque para 44x44
+     (WCAG 2.2 SC 2.5.8 pede 24x24 no mínimo) sem mudar o desenho */
+  .check{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid #9aa1b3;background:#fff;
+      cursor:pointer;margin-top:2px;position:relative;padding:0;z-index:2;touch-action:manipulation}
+  .check::before{content:"";position:absolute;top:-11px;left:-11px;width:44px;height:44px;border-radius:50%}
   .check:hover{border-color:var(--green)}
   .node.done .check{background:var(--green);border-color:var(--green)}
-  .node.done .check::after{content:"";position:absolute;top:3px;left:6px;width:4px;height:8px;
+  .node.done .check::after{content:"";position:absolute;top:4px;left:7px;width:4px;height:8px;
       border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
   .node-body{min-width:0}
-  .node .type{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;display:block}
+  /* título primeiro, metadados em uma linha só: no nível 4 são 12 itens seguidos */
+  .node .node-title{font-size:.92rem;font-weight:600;color:var(--ink);display:inline-block;margin:0 0 2px;
+      text-decoration:underline;text-decoration-color:var(--gh-tint-line);text-underline-offset:3px;
+      text-decoration-thickness:1px}
+  .node .node-title:hover{color:var(--gh-purple);text-decoration-color:currentColor}
+  .node .meta{display:block;font-size:.7rem;line-height:1.3;color:var(--muted)}
+  .node .type{font-weight:700;text-transform:uppercase;letter-spacing:.04em}
   .node.t-tut .type{color:var(--tut)}.node.t-gui .type{color:var(--gui)}
   .node.t-ref .type{color:var(--ref)}.node.t-exp .type{color:var(--exp)}
   .node.t-des .type{color:var(--des)}.node.t-res .type{color:var(--res)}
-  .node .node-title{font-size:.92rem;font-weight:600;color:var(--ink);display:inline-block;margin:1px 0}
-  .node .node-title:hover{color:var(--accent);text-decoration:underline}
-  .node .role{font-size:.7rem;color:#9aa3b2;display:block}
+  .node .role{color:var(--muted)}
   .node.advanced .role{color:var(--gh-orange-d);font-weight:700}
   .node.done{opacity:.5}
   .node.done .node-title{text-decoration:line-through}
@@ -138,96 +163,116 @@
 
   <!-- ROADMAP:START · gerado por tools/gen_roadmap.py a partir de ROADMAP.md · NÃO EDITE À MÃO -->
 
+  <nav class="atalhos" aria-label="Níveis da trilha">
+    <span class="atalhos-rot">Ir para:</span>
+    <div class="atalhos-lista">
+      <a href="#nivel-0"><b>0</b> Fundamentos de visualização de dados</a>
+      <a href="#nivel-1"><b>1</b> Arquitetura da informação</a>
+      <a href="#nivel-2"><b>2</b> Hierarquia visual e storytelling</a>
+      <a href="#nivel-3"><b>3</b> Design visual e acessibilidade</a>
+      <a href="#nivel-4"><b>4</b> Escolha do gráfico</a>
+      <a href="#nivel-5"><b>5</b> Prática guiada</a>
+      <a href="#nivel-6"><b>6</b> Governança e publicação no GovHub</a>
+    </div>
+  </nav>
+
   <div class="level">
-    <div class="milestone"><span class="num">0</span><div><strong>Fundamentos de visualização de dados</strong>
-      <em>O vocabulário e o raciocínio crítico antes de tocar na ferramenta: o que um dashboard resolve, o que o diferencia de um relatório ou de um painel operacional, e por que um dashboard bom parece simples.</em></div></div>
+    <div class="milestone" id="nivel-0"><span class="num" aria-hidden="true">0</span>
+      <div><h2><span class="sr-only">Nível 0 · </span>Fundamentos de visualização de dados</h2>
+      <p>O vocabulário e o raciocínio crítico antes de tocar na ferramenta: o que um dashboard resolve, o que o diferencia de um relatório ou de um painel operacional, e por que um dashboard bom parece simples.</p></div></div>
     <div class="nodes">
-      <div class="node t-exp" data-id="explicacao/por-que-fazer-um-dashboard"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/por-que-fazer-um-dashboard.md">Por que fazer um dashboard?</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/o-que-faz-um-dashboard-ruim"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/o-que-faz-um-dashboard-ruim.md">O que faz um dashboard ruim</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/percepcao-visual-e-carga-cognitiva"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/percepcao-visual-e-carga-cognitiva.md">Percepção visual e carga cognitiva</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/dashboard-relatorio-painel-operacional"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/dashboard-relatorio-painel-operacional.md">Dashboard, relatório analítico e painel operacional</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref support" data-id="referencia/perguntas-que-um-dashboard-deve-responder"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/perguntas-que-um-dashboard-deve-responder.md">Perguntas que um dashboard deve responder</a><span class="role">Apoio</span></div></div>
-      <div class="node t-ref support" data-id="referencia/glossario"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/glossario.md">Glossário</a><span class="role">Apoio</span></div></div>
+      <div class="node t-exp" data-id="explicacao/por-que-fazer-um-dashboard"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Por que fazer um dashboard?"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/por-que-fazer-um-dashboard.md">Por que fazer um dashboard?</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/o-que-faz-um-dashboard-ruim"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: O que faz um dashboard ruim"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/o-que-faz-um-dashboard-ruim.md">O que faz um dashboard ruim</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/percepcao-visual-e-carga-cognitiva"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Percepção visual e carga cognitiva"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/percepcao-visual-e-carga-cognitiva.md">Percepção visual e carga cognitiva</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/dashboard-relatorio-painel-operacional"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Dashboard, relatório analítico e painel operacional"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/dashboard-relatorio-painel-operacional.md">Dashboard, relatório analítico e painel operacional</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref support" data-id="referencia/perguntas-que-um-dashboard-deve-responder"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Perguntas que um dashboard deve responder"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/perguntas-que-um-dashboard-deve-responder.md">Perguntas que um dashboard deve responder</a><span class="meta"><span class="type">Referência</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-ref support" data-id="referencia/glossario"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Glossário"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/glossario.md">Glossário</a><span class="meta"><span class="type">Referência</span> · <span class="role">Apoio</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">1</span><div><strong>Arquitetura da informação</strong>
-      <em>Como organizar o conteúdo para que quem lê encontre a resposta sem esforço: posição dos elementos, fluxo de leitura, navegação do geral para o detalhe e uso disciplinado de filtros.</em></div></div>
+    <div class="milestone" id="nivel-1"><span class="num" aria-hidden="true">1</span>
+      <div><h2><span class="sr-only">Nível 1 · </span>Arquitetura da informação</h2>
+      <p>Como organizar o conteúdo para que quem lê encontre a resposta sem esforço: posição dos elementos, fluxo de leitura, navegação do geral para o detalhe e uso disciplinado de filtros.</p></div></div>
     <div class="nodes">
-      <div class="node t-exp" data-id="explicacao/arquitetura-da-informacao"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/arquitetura-da-informacao.md">Arquitetura da informação — visão geral</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/fluxo-de-leitura-f-e-z"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/fluxo-de-leitura-f-e-z.md">Fluxo de leitura: padrões F e Z</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/indicacao-de-contexto"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/indicacao-de-contexto.md">Indicação de contexto</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/estrutura-de-navegacao"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/estrutura-de-navegacao.md">Estrutura de navegação: overview, zoom e detalhe</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp support" data-id="explicacao/organizacao-de-paginas-e-abas"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/organizacao-de-paginas-e-abas.md">Organização de páginas e abas</a><span class="role">Apoio</span></div></div>
-      <div class="node t-exp" data-id="explicacao/filtros-e-segmentacao"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/filtros-e-segmentacao.md">Filtros e segmentação</a><span class="role">Essencial</span></div></div>
+      <div class="node t-exp" data-id="explicacao/arquitetura-da-informacao"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Arquitetura da informação — visão geral"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/arquitetura-da-informacao.md">Arquitetura da informação — visão geral</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/fluxo-de-leitura-f-e-z"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Fluxo de leitura: padrões F e Z"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/fluxo-de-leitura-f-e-z.md">Fluxo de leitura: padrões F e Z</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/indicacao-de-contexto"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Indicação de contexto"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/indicacao-de-contexto.md">Indicação de contexto</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/estrutura-de-navegacao"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Estrutura de navegação: overview, zoom e detalhe"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/estrutura-de-navegacao.md">Estrutura de navegação: overview, zoom e detalhe</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp support" data-id="explicacao/organizacao-de-paginas-e-abas"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Organização de páginas e abas"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/organizacao-de-paginas-e-abas.md">Organização de páginas e abas</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/filtros-e-segmentacao"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Filtros e segmentação"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/filtros-e-segmentacao.md">Filtros e segmentação</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">2</span><div><strong>Hierarquia visual e storytelling</strong>
-      <em>Definir o que se enxerga primeiro e transformar o dashboard em uma narrativa que gera decisão, em vez de um mural de números sem prioridade.</em></div></div>
+    <div class="milestone" id="nivel-2"><span class="num" aria-hidden="true">2</span>
+      <div><h2><span class="sr-only">Nível 2 · </span>Hierarquia visual e storytelling</h2>
+      <p>Definir o que se enxerga primeiro e transformar o dashboard em uma narrativa que gera decisão, em vez de um mural de números sem prioridade.</p></div></div>
     <div class="nodes">
-      <div class="node t-exp" data-id="explicacao/hierarquia-visual"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/hierarquia-visual.md">Hierarquia visual</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/kpis-e-big-numbers"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/kpis-e-big-numbers.md">KPIs e Big Numbers</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/storytelling-com-dados"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/storytelling-com-dados.md">Storytelling e comunicação com dados</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp support" data-id="explicacao/vies-e-distorcao-nos-dados"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/vies-e-distorcao-nos-dados.md">Viés e distorção na apresentação dos dados</a><span class="role">Apoio</span></div></div>
+      <div class="node t-exp" data-id="explicacao/hierarquia-visual"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Hierarquia visual"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/hierarquia-visual.md">Hierarquia visual</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/kpis-e-big-numbers"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: KPIs e Big Numbers"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/kpis-e-big-numbers.md">KPIs e Big Numbers</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/storytelling-com-dados"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Storytelling e comunicação com dados"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/storytelling-com-dados.md">Storytelling e comunicação com dados</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp support" data-id="explicacao/vies-e-distorcao-nos-dados"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Viés e distorção na apresentação dos dados"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/vies-e-distorcao-nos-dados.md">Viés e distorção na apresentação dos dados</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Apoio</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">3</span><div><strong>Design visual e acessibilidade</strong>
-      <em>Base de design aplicada a dados, sem exigir formação em design — e acessibilidade como requisito legal da plataforma de governo (eMAG e WCAG), não como polimento opcional no fim do projeto.</em></div></div>
+    <div class="milestone" id="nivel-3"><span class="num" aria-hidden="true">3</span>
+      <div><h2><span class="sr-only">Nível 3 · </span>Design visual e acessibilidade</h2>
+      <p>Base de design aplicada a dados, sem exigir formação em design — e acessibilidade como requisito legal da plataforma de governo (eMAG e WCAG), não como polimento opcional no fim do projeto.</p></div></div>
     <div class="nodes">
-      <div class="node t-exp" data-id="explicacao/consistencia-visual"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/consistencia-visual.md">Consistência visual: tipografia, grid e alinhamento</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/paletas-e-significado-das-cores"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/paletas-e-significado-das-cores.md">Paletas e significado das cores</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/acessibilidade-em-dashboards"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/acessibilidade-em-dashboards.md">Acessibilidade em dashboards (eMAG e WCAG)</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/checklist-de-acessibilidade"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/checklist-de-acessibilidade.md">Checklist de acessibilidade</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp support" data-id="explicacao/interatividade"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/interatividade.md">Interatividade: filtros, drill-down e drill-through</a><span class="role">Apoio</span></div></div>
-      <div class="node t-exp support" data-id="explicacao/experiencia-do-usuario-e-performance"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/experiencia-do-usuario-e-performance.md">Experiência do usuário e performance</a><span class="role">Apoio</span></div></div>
+      <div class="node t-exp" data-id="explicacao/consistencia-visual"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Consistência visual: tipografia, grid e alinhamento"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/consistencia-visual.md">Consistência visual: tipografia, grid e alinhamento</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/paletas-e-significado-das-cores"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Paletas e significado das cores"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/paletas-e-significado-das-cores.md">Paletas e significado das cores</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/acessibilidade-em-dashboards"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Acessibilidade em dashboards (eMAG e WCAG)"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/acessibilidade-em-dashboards.md">Acessibilidade em dashboards (eMAG e WCAG)</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/checklist-de-acessibilidade"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Checklist de acessibilidade"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/checklist-de-acessibilidade.md">Checklist de acessibilidade</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp support" data-id="explicacao/interatividade"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Interatividade: filtros, drill-down e drill-through"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/interatividade.md">Interatividade: filtros, drill-down e drill-through</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-exp support" data-id="explicacao/experiencia-do-usuario-e-performance"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Experiência do usuário e performance"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/experiencia-do-usuario-e-performance.md">Experiência do usuário e performance</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Apoio</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">4</span><div><strong>Escolha do gráfico</strong>
-      <em>O catálogo de consulta: qual visual responde qual pergunta, no Superset e no Power BI. Comece pelo raciocínio (as duas primeiras páginas) e volte às referências sempre que estiver construindo.</em></div></div>
+    <div class="milestone" id="nivel-4"><span class="num" aria-hidden="true">4</span>
+      <div><h2><span class="sr-only">Nível 4 · </span>Escolha do gráfico</h2>
+      <p>O catálogo de consulta: qual visual responde qual pergunta, no Superset e no Power BI. Comece pelo raciocínio (as duas primeiras páginas) e volte às referências sempre que estiver construindo.</p></div></div>
     <div class="nodes">
-      <div class="node t-exp" data-id="explicacao/qual-e-o-grafico-certo"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/qual-e-o-grafico-certo.md">Qual é o gráfico certo para o meu dado?</a><span class="role">Essencial</span></div></div>
-      <div class="node t-exp" data-id="explicacao/erros-comuns-na-escolha-do-grafico"><button class="check"></button><div class="node-body"><span class="type">Explicação</span><a class="node-title" href="doc.html?path=docs/explicacao/erros-comuns-na-escolha-do-grafico.md">Erros mais comuns na escolha do gráfico</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/guia-rapido-pergunta-para-grafico"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/guia-rapido-pergunta-para-grafico.md">Guia rápido: pergunta → gráfico</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-tabelas"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-tabelas.md">Tabelas: Table e Pivot Table / Matrix</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-series-temporais"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-series-temporais.md">Séries temporais: Line e Area Chart</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-comparacao-entre-categorias"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-comparacao-entre-categorias.md">Comparação entre categorias: Bar e Horizontal Bar</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-distribuicao"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-distribuicao.md">Distribuição: Histogram e Box Plot</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-partes-de-um-todo"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-partes-de-um-todo.md">Partes de um todo: Pie, Donut e Treemap</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-correlacao"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-correlacao.md">Correlação: Scatter Plot</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/graficos-geoespaciais"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-geoespaciais.md">Geoespacial: Maps e Bubble Maps</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref support" data-id="referencia/graficos-avancados-power-bi"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/graficos-avancados-power-bi.md">Visuais avançados do Power BI: Funnel, Decomposition Tree e Waterfall</a><span class="role">Apoio</span></div></div>
-      <div class="node t-ref support" data-id="referencia/azure-maps"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/azure-maps.md">Azure Maps (Power BI)</a><span class="role">Apoio</span></div></div>
-      <div class="node t-res support" data-id="pesquisa/mapas-superset-vs-power-bi"><button class="check"></button><div class="node-body"><span class="type">Pesquisa</span><a class="node-title" href="doc.html?path=docs/pesquisa/mapas-superset-vs-power-bi.md">Mapas: Superset vs. Power BI</a><span class="role">Apoio</span></div></div>
+      <div class="node t-exp" data-id="explicacao/qual-e-o-grafico-certo"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Qual é o gráfico certo para o meu dado?"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/qual-e-o-grafico-certo.md">Qual é o gráfico certo para o meu dado?</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-exp" data-id="explicacao/erros-comuns-na-escolha-do-grafico"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Erros mais comuns na escolha do gráfico"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/explicacao/erros-comuns-na-escolha-do-grafico.md">Erros mais comuns na escolha do gráfico</a><span class="meta"><span class="type">Explicação</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/guia-rapido-pergunta-para-grafico"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Guia rápido: pergunta → gráfico"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/guia-rapido-pergunta-para-grafico.md">Guia rápido: pergunta → gráfico</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-tabelas"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Tabelas: Table e Pivot Table / Matrix"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-tabelas.md">Tabelas: Table e Pivot Table / Matrix</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-series-temporais"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Séries temporais: Line e Area Chart"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-series-temporais.md">Séries temporais: Line e Area Chart</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-comparacao-entre-categorias"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Comparação entre categorias: Bar e Horizontal Bar"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-comparacao-entre-categorias.md">Comparação entre categorias: Bar e Horizontal Bar</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-distribuicao"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Distribuição: Histogram e Box Plot"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-distribuicao.md">Distribuição: Histogram e Box Plot</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-partes-de-um-todo"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Partes de um todo: Pie, Donut e Treemap"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-partes-de-um-todo.md">Partes de um todo: Pie, Donut e Treemap</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-correlacao"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Correlação: Scatter Plot"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-correlacao.md">Correlação: Scatter Plot</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/graficos-geoespaciais"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Geoespacial: Maps e Bubble Maps"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-geoespaciais.md">Geoespacial: Maps e Bubble Maps</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref support" data-id="referencia/graficos-avancados-power-bi"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Visuais avançados do Power BI: Funnel, Decomposition Tree e Waterfall"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/graficos-avancados-power-bi.md">Visuais avançados do Power BI: Funnel, Decomposition Tree e Waterfall</a><span class="meta"><span class="type">Referência</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-ref support" data-id="referencia/azure-maps"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Azure Maps (Power BI)"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/azure-maps.md">Azure Maps (Power BI)</a><span class="meta"><span class="type">Referência</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-res support" data-id="pesquisa/mapas-superset-vs-power-bi"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Mapas: Superset vs. Power BI"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/pesquisa/mapas-superset-vs-power-bi.md">Mapas: Superset vs. Power BI</a><span class="meta"><span class="type">Pesquisa</span> · <span class="role">Apoio</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">5</span><div><strong>Prática guiada</strong>
-      <em>Mão na massa: do entendimento do problema até o dashboard publicado, passando por KPIs, wireframe, construção na ferramenta e revisão de qualidade.</em></div></div>
+    <div class="milestone" id="nivel-5"><span class="num" aria-hidden="true">5</span>
+      <div><h2><span class="sr-only">Nível 5 · </span>Prática guiada</h2>
+      <p>Mão na massa: do entendimento do problema até o dashboard publicado, passando por KPIs, wireframe, construção na ferramenta e revisão de qualidade.</p></div></div>
     <div class="nodes">
-      <div class="node t-tut capstone" data-id="tutoriais/do-problema-ao-dashboard-publicado"><button class="check"></button><div class="node-body"><span class="type">Tutorial</span><a class="node-title" href="doc.html?path=docs/tutoriais/do-problema-ao-dashboard-publicado.md">Do problema ao dashboard publicado</a><span class="role">Capstone</span></div></div>
-      <div class="node t-gui support" data-id="guias/adicionar-filtro-no-superset"><button class="check"></button><div class="node-body"><span class="type">Guia</span><a class="node-title" href="doc.html?path=docs/guias/adicionar-filtro-no-superset.md">Adicionar um filtro no Superset</a><span class="role">Apoio</span></div></div>
-      <div class="node t-gui support" data-id="guias/criar-tema-de-cores-no-power-bi"><button class="check"></button><div class="node-body"><span class="type">Guia</span><a class="node-title" href="doc.html?path=docs/guias/criar-tema-de-cores-no-power-bi.md">Criar um tema de cores no Power BI (JSON)</a><span class="role">Apoio</span></div></div>
-      <div class="node t-gui support" data-id="guias/configurar-tab-order-no-power-bi"><button class="check"></button><div class="node-body"><span class="type">Guia</span><a class="node-title" href="doc.html?path=docs/guias/configurar-tab-order-no-power-bi.md">Configurar a ordem de leitura (tab order) no Power BI</a><span class="role">Apoio</span></div></div>
-      <div class="node t-des capstone" data-id="desafios/dashboard-ruim-para-dashboard-bom"><button class="check"></button><div class="node-body"><span class="type">Desafio</span><a class="node-title" href="doc.html?path=docs/desafios/dashboard-ruim-para-dashboard-bom.md">Transformar um dashboard ruim em um dashboard bom</a><span class="role">Capstone</span></div></div>
+      <div class="node t-tut capstone" data-id="tutoriais/do-problema-ao-dashboard-publicado"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Do problema ao dashboard publicado"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/tutoriais/do-problema-ao-dashboard-publicado.md">Do problema ao dashboard publicado</a><span class="meta"><span class="type">Tutorial</span> · <span class="role">Capstone</span></span></div></div>
+      <div class="node t-gui support" data-id="guias/adicionar-filtro-no-superset"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Adicionar um filtro no Superset"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/guias/adicionar-filtro-no-superset.md">Adicionar um filtro no Superset</a><span class="meta"><span class="type">Guia</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-gui support" data-id="guias/criar-tema-de-cores-no-power-bi"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Criar um tema de cores no Power BI (JSON)"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/guias/criar-tema-de-cores-no-power-bi.md">Criar um tema de cores no Power BI (JSON)</a><span class="meta"><span class="type">Guia</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-gui support" data-id="guias/configurar-tab-order-no-power-bi"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Configurar a ordem de leitura (tab order) no Power BI"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/guias/configurar-tab-order-no-power-bi.md">Configurar a ordem de leitura (tab order) no Power BI</a><span class="meta"><span class="type">Guia</span> · <span class="role">Apoio</span></span></div></div>
+      <div class="node t-des capstone" data-id="desafios/dashboard-ruim-para-dashboard-bom"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Transformar um dashboard ruim em um dashboard bom"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/desafios/dashboard-ruim-para-dashboard-bom.md">Transformar um dashboard ruim em um dashboard bom</a><span class="meta"><span class="type">Desafio</span> · <span class="role">Capstone</span></span></div></div>
     </div>
   </div>
 
   <div class="level">
-    <div class="milestone"><span class="num">6</span><div><strong>Governança e publicação no GovHub</strong>
-      <em>Como tudo isso se conecta às regras da plataforma: nomenclatura, papéis, homologação e o checklist que precede qualquer publicação para o público final.</em></div></div>
+    <div class="milestone" id="nivel-6"><span class="num" aria-hidden="true">6</span>
+      <div><h2><span class="sr-only">Nível 6 · </span>Governança e publicação no GovHub</h2>
+      <p>Como tudo isso se conecta às regras da plataforma: nomenclatura, papéis, homologação e o checklist que precede qualquer publicação para o público final.</p></div></div>
     <div class="nodes">
-      <div class="node t-ref" data-id="referencia/padroes-e-governanca-govhub"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/padroes-e-governanca-govhub.md">Padrões e governança GovHub</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref" data-id="referencia/checklist-final-de-qualidade"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/checklist-final-de-qualidade.md">Checklist final de qualidade antes de publicar</a><span class="role">Essencial</span></div></div>
-      <div class="node t-gui" data-id="guias/publicar-e-homologar-no-govhub"><button class="check"></button><div class="node-body"><span class="type">Guia</span><a class="node-title" href="doc.html?path=docs/guias/publicar-e-homologar-no-govhub.md">Publicar e homologar um dashboard no GovHub</a><span class="role">Essencial</span></div></div>
-      <div class="node t-ref support" data-id="referencia/papeis-e-permissoes"><button class="check"></button><div class="node-body"><span class="type">Referência</span><a class="node-title" href="doc.html?path=docs/referencia/papeis-e-permissoes.md">Papéis e permissões</a><span class="role">Apoio</span></div></div>
+      <div class="node t-ref" data-id="referencia/padroes-e-governanca-govhub"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Padrões e governança GovHub"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/padroes-e-governanca-govhub.md">Padrões e governança GovHub</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref" data-id="referencia/checklist-final-de-qualidade"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Checklist final de qualidade antes de publicar"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/checklist-final-de-qualidade.md">Checklist final de qualidade antes de publicar</a><span class="meta"><span class="type">Referência</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-gui" data-id="guias/publicar-e-homologar-no-govhub"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Publicar e homologar um dashboard no GovHub"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/guias/publicar-e-homologar-no-govhub.md">Publicar e homologar um dashboard no GovHub</a><span class="meta"><span class="type">Guia</span> · <span class="role">Essencial</span></span></div></div>
+      <div class="node t-ref support" data-id="referencia/papeis-e-permissoes"><button class="check" type="button" aria-pressed="false" aria-label="Marcar como concluído: Papéis e permissões"></button><div class="node-body"><a class="node-title" href="doc.html?path=docs/referencia/papeis-e-permissoes.md">Papéis e permissões</a><span class="meta"><span class="type">Referência</span> · <span class="role">Apoio</span></span></div></div>
     </div>
   </div>
 
@@ -257,8 +302,10 @@ marcos de avaliação — bons momentos para revisar em dupla com quem já publi
     var count = 0;
     nodes.forEach(function(n){
       var id = n.getAttribute("data-id");
-      if (done[id]) { n.classList.add("done"); count++; }
-      else { n.classList.remove("done"); }
+      var feito = !!done[id];
+      n.classList.toggle("done", feito);
+      n.querySelector(".check").setAttribute("aria-pressed", feito ? "true" : "false");
+      if (feito) count++;
     });
     document.getElementById("ptxt").textContent = count + " / " + total + " concluídos";
     document.getElementById("pfill").style.width = (total ? (count/total*100) : 0) + "%";

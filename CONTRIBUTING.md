@@ -103,6 +103,23 @@ lugar onde se mexe nelas, e vale para `index.html`, `roadmap.html` e `doc.html`.
   pelo rótulo e pelo estilo da borda.
 - O porquê de cada decisão está na [ADR 0002](docs/adr/0002-identidade-visual-govhub.md).
 
+### Interface: o que a trilha exige de si mesma
+
+O material ensina que acessibilidade é requisito, não acabamento — então as páginas seguem as mesmas
+regras que cobram de quem constrói dashboards:
+
+- **Texto sempre em 4,5:1**, inclusive o que parece secundário: etiquetas, legendas, metadados. O
+  cinza claro decorativo é a falha mais comum, e a que mais se repete (uma vez por item da lista).
+- **Alvo de clique de 44×44px** no mínimo — o desenho pode ser menor, basta ampliar a área com um
+  pseudo-elemento. WCAG 2.2 exige 24×24; 44 é o que funciona no dedo.
+- **Se o cartão inteiro parece clicável, ele precisa ser clicável.** Use o link do título esticado
+  por cima (`::after` com `position:absolute`) em vez de criar um segundo link.
+- **Heading de verdade para cada seção navegável** (`<h2>`), não `<strong>` estilizado: em página
+  longa, pular de heading em heading é como se navega com leitor de tela.
+- **Todo botão diz o que faz** (`aria-label`) e informa seu estado (`aria-pressed`).
+- Âncora de seção precisa de `scroll-margin-top` maior que as barras fixas, senão o alvo fica
+  escondido embaixo delas.
+
 ## 4. Diagramas e ilustrações
 
 Uma página que descreve um **processo, uma decisão ou uma sequência** pede um diagrama. Uma que
